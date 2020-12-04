@@ -1,3 +1,4 @@
+
 import java.util.*;
 import java.util.regex.*;
 
@@ -81,32 +82,33 @@ class Project3 {
 
   // returns ordered list of pairs of (word, average)
   public static ArrayList<Pair<String, Float>> getPowerWordsHashList(HashMap<String, int[]> map, String[] words, float score) {
+    // num = size of returning ArrayList
     int num = getNumPowerWords(words);
 
     // creates a HashMap using the float average as the key
     HashMap<Float, ArrayList<String>> averages = new HashMap<Float, ArrayList<String>>();
     for (int i = 0; i < words.length; i++) {
       String word = words[i];
-      // default value of the average is a neutral value of 2.0
+      // default value of average is a neutral value of 2.0
       float average = 2.0f;
       if (map.containsKey(word)) {
-        // if word exists in map, then it can actually calculate the average
+        // if word exists in map, then actually calculates the average
         int[] values = map.get(word);
         average = (float) values[1]/values[0];
       }
       if (averages.containsKey(average)) {
-        // if averages already contains average, then it will add word to its ArrayList of words
+        // if averages already contains average, then adds word to its ArrayList of words
         averages.get(average).add(word);
       } else {
-        // else a new list consisting of word will be added to averages with average as its key
+        // else a new list consisting of word is added to averages with average as its key
         ArrayList<String> list = new ArrayList<String>();
         list.add(word);
         averages.put(average, list);
       }
     }
 
-    // if score > 2, creates a minheap to store the num largest elements
-    // else creates a maxheap to store the num smallest elements
+    // if score > 2 (good popularity score), creates a minheap to store the num largest elements
+    // else (bad popularity score) creates a maxheap to store the num smallest elements
     PriorityQueue<Float> queue;
     if (score > 2) {
       queue = new PriorityQueue<Float>(num);
@@ -119,17 +121,19 @@ class Project3 {
       Map.Entry elem = (Map.Entry) iter2.next();
       queue.offer((Float) elem.getKey());
 
+      // if queue becomes too large, removes undesired element
       if (queue.size() > num) {
         queue.poll();
       }
     }
 
-    // converts the heap into the an ArrayList of (word, average)'s'
+    // converts the heap into the an ArrayList of Pair(word, average)'s
     ArrayList<Pair<String, Float>> output = new ArrayList<Pair<String, Float>>();
     while (queue.size() > 0) {
       float average = queue.peek();
       queue.poll();
       ArrayList<String> wordsList = averages.get(average);
+
       for (int i = 0; i < wordsList.size(); i++) {
         String word = wordsList.get(i);
         Pair pair = new Pair(word, average);
@@ -142,34 +146,36 @@ class Project3 {
     }
     return output;
   }
+
   // returns ordered list of pairs of (word, average)
   public static ArrayList<Pair<String, Float>> getPowerWordsTreeList(TreeMap<String, int[]> map, String[] words, float score) {
+    // num = size of returning ArrayList
     int num = getNumPowerWords(words);
 
     // creates a TreeMap using the float average as the key
     TreeMap<Float, ArrayList<String>> averages = new TreeMap<Float, ArrayList<String>>();
     for (int i = 0; i < words.length; i++) {
       String word = words[i];
-      // default value of the average is a neutral value of 2.0
+      // default value of average is a neutral value of 2.0
       float average = 2.0f;
       if (map.containsKey(word)) {
-        // if word exists in map, then it can actually calculate the average
+        // if word exists in map, then actually calculates the average
         int[] values = map.get(word);
         average = (float) values[1]/values[0];
       }
       if (averages.containsKey(average)) {
-        // if averages already contains average, then it will add word to its ArrayList of words
+        // if averages already contains average, then adds word to its ArrayList of words
         averages.get(average).add(word);
       } else {
-        // else a new list consisting of word will be added to averages with average as its key
+        // else a new list consisting of word is added to averages with average as its key
         ArrayList<String> list = new ArrayList<String>();
         list.add(word);
         averages.put(average, list);
       }
     }
 
-    // if score > 2, creates a minheap to store the num largest elements
-    // else creates a maxheap to store the num smallest elements
+    // if score > 2 (good popularity score), creates a minheap to store the num largest elements
+    // else (bad popularity score) creates a maxheap to store the num smallest elements
     PriorityQueue<Float> queue;
     if (score > 2) {
       queue = new PriorityQueue<Float>(num);
@@ -182,17 +188,19 @@ class Project3 {
       Map.Entry elem = (Map.Entry) iter2.next();
       queue.offer((Float) elem.getKey());
 
+      // if queue becomes too large, removes undesired element
       if (queue.size() > num) {
         queue.poll();
       }
     }
 
-    // converts the heap into the an ArrayList of (word, average)'s'
+    // converts the heap into the an ArrayList of Pair(word, average)'s
     ArrayList<Pair<String, Float>> output = new ArrayList<Pair<String, Float>>();
     while (queue.size() > 0) {
       float average = queue.peek();
       queue.poll();
       ArrayList<String> wordsList = averages.get(average);
+
       for (int i = 0; i < wordsList.size(); i++) {
         String word = wordsList.get(i);
         Pair pair = new Pair(word, average);
