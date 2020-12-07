@@ -1,1 +1,4 @@
-placeholder
+This is the link to the database with all the tweets:
+https://www.kaggle.com/kazanova/sentiment140?select=training.1600000.processed.noemoticon.csv
+
+Download the .csv file in here, and then set the path in your code to load it
